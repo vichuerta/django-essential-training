@@ -41,3 +41,26 @@ Your generated Django project folder, in this case [smartnotes](./smartnotes/), 
 ```bash
 python3 manage.py runserver
 ```
+
+### Minimum working page - `django-admin startapp`
+
+When dealing with big software projects, we need to make sure we are not creating a mess. The way we do this is to compartmentalize our project into smaller sections that have clear boundaries from day one. That's why Django created the concept of apps. Let's create one to understand it better. We'll use again the django-admin command to create a new app called home. You can see now that we have two folders: smartnotes, which is our settings folder, and home, which is the Django app we just created. Every time we create an app, we need to add it to the settings file so that it knows that that folder is part of the project we're running. Let's open the settings.py file. And add the name of our app in the INSTALLED_APPS variable. In order to make things a bit more organized, I always leave a small comment separating this app, created by us, from those that were already installed by default. Okay. Now that we have our project started, our app configured, it's time to create our first view. Let's go to the home, then go to the views file, and write our first function. As you can see, this is a pre-configured file. So we need to create our functions here. Let's import from django.http import HttpResponse. We can delete this, and now we create def home. It receives a request. And it return an HttpResponse with a simple message. Hello, world! As you can see, this function is saying that every time it receives a request, it will return a response with the text Hello, world! Okay, but how does it know when to send a request to this function? Well, that's why we have the urls.py file. We can go back now to the smartnotes, urls.py, and import this file there so we can have access to this function. So from home, let's import views, and now here inside the urlpatterns, we're going to add a new path. Let's call it home. And let's say views.home. Okay, so let's run our server again, and see what happens if we go to the localhost:8000. Yeah, so now instead of that beautiful page we had, because we have something implemented and not just the default configuration, we start to receive a 404, which makes sense because we never implemented anything here. However, because we have the debug equals true on the settings file, Django will list the endpoints that this project has available. And guess who is there. Yes, our home endpoint we just created. Now if we go to localhost home, we can see that we have the Hello, world! being displayed. Amazing, right? Let's take a moment here to understand what's happening. When a person goes to the home endpoint, they're making a request to that path. Django will go to the urls.py file to see if it's ready to receive a request at this path. Since it is, it will go to the views file, finally arriving to the function we defined. Since the function received the request, it can then respond with a message Hello, world! Django uses a common pattern as the way of structuring its project called Model View Template framework, or MVT. Views are responsible for handling requests and responses. In this video, you have learned that views can be as simple as functions, and can respond with something as simple as pure text. There are yet two additional layers for us to get familiarized with, right? These additional layers will allow us to increase our project's complexity, while being simple tools to work with. The model layer handles the data and how it's stored, and we'll see more about it in chapter three. The template layer allow us to render the information coming from the database into lovely HTML pages.
+
+Every time we create an app, we need to add it to the settings file so that it knows that that folder is part of the project we're running. Let's open the [settings.py](./smartnotes/settings.py) file. And add the name of our app in the `INSTALLED_APPS` variable. In order to make things a bit more organized, I always leave a small comment separating this app, created by us, from those that were already installed by default. Okay. Now that we have our project started, our app configured, it's time to create our first view.
+
+```bash
+python3 manage.py runserver
+```
+
+http://127.0.0.1:8000 does not return anything since config is not setup (modified from the default config)
+
+http://127.0.0.1:8000/home returns `Hello, World!` as expected
+
+
+Django uses the Model View Template (MVT) Framework
+
+Views are responsible for handling requests and responses.
+
+Model Layer - handles the data and how it's stored
+
+Template Layer - allow us to render the information coming from the database into lovely HTML pages
