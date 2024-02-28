@@ -20,5 +20,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     # this will call home view that is defined in the `home` app
-    path('', include('home.urls'))
+    path('', include('home.urls')),
+    path('smart/', include('notes.urls')),
 ]
