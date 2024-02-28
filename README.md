@@ -88,3 +88,19 @@ DTL allows us to use sophisticated programming logic for creating dynamic HTML p
 
 Good software projects should be well modularize, and your Django project should be no different. That's why each app should be self-contained, which means that everything you need for that app should live inside it. That's why we created the folder template inside it. The ideal app is one where you can delete the folder and do nothing else, the Django project just continued to work perfectly.
 
+## 2. Django Built-In User Management
+
+### Creating users in Django
+
+Even though Django is typically known for the ease in which we can create endpoints. One of the most powerful features is the Django Admin Interface. It provides an interface. So that site administrators like you and me can easily view and manipulate data. Let's check out how that works. Are you wondering what you need to get it? Nothing, the system comes by default. When you open the local host 8000, you can see that besides the home endpoint we created, the admin endpoint is also available. Let's open it. As you can see, this is a login interface, but what now we didn't create any authentication system right, wrong. Django has the entire authentication system ready to go. The only thing we need to do is to make sure our database is properly configured. Let's go back. And remember when we had this red message while running the run server, this message is letting us know that our project has some database changes that weren't applied yet. The way Django knows if the database is behind the system, changes is through a couple of files called migrations. Migrations, explain what kind of changes a database need to perform such as create a new table, establish a new relationship, et cetera. Django already has the migrations for the authentication system ready. So what you need to do is apply them to the database and we do this by using the command migrate that will actually change the database. So what we can do now is run the command migrate. Okay, you can see here that the changes made are all regarding the admin and the auth apps. We don't see these apps because they come from Django by default, but they are there and they're ready to be used. You shouldn't worry too much about migrations now. We'll learn a lot about them in future classes. Since now, our database is up to speed with Django. What we need is to create a super user that will have all the powers that can in this Django project. We do this by running the command, create super user. It's pretty straightforward. Let's make the username admin. I'm going to leave the email address empty, and I'll add admin as a password. As you can see, Django already has a couple of checks to guarantee we are creating secure passwords. You can bypass it for now as I will just because this is while we are developing this project locally, never bypass it in production environments. Security must always be your number one priority, and Django is here to help you. Okay, now we can go back to the local host 8000 admin. Well, first let's run the server again. Okay, now we can go back to the admin interface, Admin, admin, login, and there you go. Now you have full access to the Django Admin Interface. And as you can see, we don't have any red messages now, while we run the run server, because our database is completely up to speed with the project. There you go.
+
+
+Migrations, explain what kind of changes a database need to perform such as create a new table, establish a new relationship, et cetera. Django already has the migrations for the authentication system ready. So what you need to do is apply them to the database and we do this by using the command migrate that will actually change the database.
+
+```bash
+python3 manage.py migrate
+
+python3 manage.py createsuperuser
+
+python3 manage.py runserver
+```
