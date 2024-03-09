@@ -197,3 +197,48 @@ As we've seen, it's pretty easy to add CSS files into Django template. But it wo
 
 Okay, so instead of defining all the CSS, we want to speed up our front end a little bit, so let's use the CSS framework. We're going to use Bootstrap for now, so what we need to do is on the static, base.html, I'm going to change this CSS we just created with the link to the Bootstrap framework version five. So we can go back, delete this line, and that's it. I know it's a pretty big link, so you can find it on the notes of this class. Okay, once we define this, we can start using it. So the first thing we can do here is on top of the block content, let's add a div and then on this div, let's add a class equals to my-5 text-center and container. Okay, so now we can go to the home page and check the changes that the Bootstrap's already made. So let's go here. You can see here now that the style's a little bit better. We have more spacing, the text is on center, et cetera. So let's add a button on the home page that will lead us to the list of notes. So let's go to home. Welcome. Perfect. Here we can add, so it's going to be an a href. Let's leave it empty for now. Then in here, we're going to use two classes. Btn for button and btn-primary for the style. Then check out these smart notes. Okay, so if we go back, we can see now that we have a button but it doesn't do anything. So how do we deal with links here? We could hard code the link to our localhost but imagine that when we deploy our website, we need to remember to come back and change everything. Not so good. Thankfully, the Django template language has a function for that. What we need to do is the following. Let's open curly brackets and percentage, and then use url, and then in here we're going to say notes.list. Okay, you might be wondering, okay, how Django knows which endpoint to link? It doesn't, and we need to tell it. So let's go back to notes, urls, and in here, what we're going to do is add a name. So we can give a name notes.list. That's all we need for Django dynamically define each endpoint we are pointing to, no matter if you're on localhost or production. Let's test it out. Let's click here, and there you go. We're being redirected to this template. That also needs some styling. We'll get there. So let's go back to this page and try to style it up a little bit. So let's go to notes_list, and in here, we need a couple of things. So first, we can add some vertical styling here. So we're going to use my-5 here. Okay. And let's use a couple of divs here to have some cards. So bear with me just a little longer. So in here, instead of the ul, we're going to use a div, and this div's going to have class is equal row row-cols3 and g-2. Then we're going to have another div here, and this div is going to have a class equals to col. Okay, and finally, we're going to have another div that is going to have a class equals p-3 border. Okay, so this here is going to be a row, and we're going to have each card to be a column. So what we can do here now is say that for note in notes, we're going to have in here, let's add a title. So it's going to have here note.title. And then let's end the for here. And let's leave it for now like this. So we can remove this. Okay, let's check out. Amazing. This would look a little bit better if we could display some of the text of a note but not all of it. We can use the truncatechars function to do this. Let's try it out. So in here, let's add note.text, and then with the pipe, truncatechars. Let's just leave it at 10. So this is going to display 10 characters. So let's try it out. And there you go. So what's happening here is that Django is taking the text and just displaying the first 10 characters plus the three dots. It looks a little bit better, doesn't it? Okay, so it's still missing a couple of things, so we can't really access all the details of that particular note. So we're almost there. First, let's give a name to the detail URLs as well. So let's go back. Urls.py and then in here, let's add name is equal to notes.detail. Okay, so now we can go back, and in the title, we can add the link. So it's going to be an a with href is equal to the url, and then notes.detail. Let's pass this to here. It's still missing something. So we also need to pass here the pk. So the pk is going to be the note.id. Pretty simple. We can also add some classes here just to make it a little bit prettier. So let's pass class is equals to text-dark, and text-decoration-non. Okay. Reorganizing, that's it. Let's try it out. Let's go back, refresh, and you can see here that now we have a link to the specific note. But now we're still missing some details style here. So let's go back. Notes_details, and let's just add here a div. This should be in here. And on this div, let's add a class border. Let's make it round. And just add some style on the h1, so my equals 5. Okay, I think we're done here. Let's go back. Yeah, so all done. Now you have style and dynamically generated links. How amazing was that?
 
+### Chapter 5 Quiz
+
+#### Question 1 of 4
+Where should you keep your static files?
+
+- in the home folder
+- in the smartnotes folder
+- in their own folder
+    Correct ✅
+
+#### Question 2 of 4
+How can you tell Django that the following html code will be using the static files?
+
+```html
+<html>
+     <h1> These are the notes:</h1>
+     <ul>
+          {% for note in notes %}
+               <li>{{note.title}}</li>
+          {% endfor %}
+     </ul>
+</html>
+```
+- by adding {% load static %} to the top of the html code
+    Correct ✅
+- by adding {{ load static }} to the top of the html code
+- by adding {( load static )} to the top of the html code
+
+#### Question 3 of 4
+
+Which function tells Django to display part of a note?
+
+- the textfield function
+- the charField function
+- the truncatechars function
+    Correct ✅
+
+#### Question 4 of 4
+Where are the basics of your html defined?
+
+- in the notes_form.html template
+- in the notes_detail.html template
+- in the base.html template
+    Correct ✅
+- in the authorized.html template
