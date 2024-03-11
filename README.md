@@ -261,3 +261,89 @@ Adding a new endpoint was nice and easy but now it's time to consider more compl
 
 This form we just created, it's starting to look nice, but there's work to do here. It's still missing some style. One alternative would be to build the whole form by hand with each label and each input, everything. As you can see, this is not such a fun activity once you have a form already laid out for you, right? Forms are amazing because not only they add validation, but also, because you can quickly add styles to it. First, let's say that we want to change the labels of our form. Title and texts are the words we use in the backend, but that doesn't mean that it looks so good for our users. What we can do is, on the class meta, add a field called labels, and in here, let's add text, it's going to be, write your thoughts here. Let's say this. Now if we go back and refresh this, as you can see, we are controlling the UX directly from our backend. We can also add an attribute widget to inject CSS classes directly to the form. Let's go back and add a new field code, widgets, and then, in here, let's add title, and this is going to be a forms text input, and then we're going to pass attributes. This is going to be a dictionary and the class is going to be form control and some vertical spacing as usual. We can do a similar thing with the text. So text, this on the other hand is not a text input, but a text area, and also, we're going to add, again, attributes, and let's add the same classes. Class is equal to form control, and this. Let's go back and check it out. Refresh. Yeah. You can see now that controlling the frontend in an easy and accessible way is also a main advantage of using model forms. All this without ever changing the original template. Nice and easy.
 
+### Chapter 6 Quiz
+
+#### Question 1 of 4
+
+If you want to label your text box to say "Place notes here" instead of "Text", how should you modify the following code?
+
+```python
+class NotesForm(forms.ModelForm):
+     class Meta:
+          model = Notes
+          fields = ('title', 'text')
+```
+
+```python
+# Correct ✅
+class NotesForm(forms.ModelForm):
+     class Meta:
+          model = Notes
+          fields = ('title', 'text')
+          labels = {
+               'text': 'Place notes here:'
+          }
+```
+
+```python
+
+class NotesForm(forms.ModelForm):
+     class Meta:
+          model = Notes
+          fields = ('title', 'text')
+          labels = {
+               'title': 'Place notes here:'
+          }
+```
+
+```python
+class NotesForm(forms.ModelForm):
+     class Meta:
+          model = Notes
+          fields = ('title', 'text')
+          labels = {
+                'Place notes here:'
+          }
+```
+
+#### Question 2 of 4
+
+In the `views.py` file, what can be passed instead of the fields, as shown in the following code snippet, to allow for more powerful validation?
+
+```python
+class NotesCreateView(CreateView):
+     model = Notes
+     fields = ['title', 'text']
+     success_url = '/smart/notes'
+```
+
+- a context_object_name
+- a form_class
+    Correct ✅
+- a template_name
+
+#### Question 3 of 4
+
+Every time a browser requests a webpage that has a form, what will Django send to that browser?
+
+- a password
+- a token
+Correct ✅
+- a code
+- a form
+
+#### Question 4 of 4
+
+If you are sending information back to the server, what should your method be in the following form tag?
+
+```html
+<form action="{% url 'notes.new' %}" method= >
+     {{ form}}
+</form>
+```
+
+- `method='PUT'`
+- `method='POST'`
+    Correct ✅
+- `method='DELETE'`
+- `method='GET'`
