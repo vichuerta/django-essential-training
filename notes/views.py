@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import Http404
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from .forms import NotesForm
 from .models import Notes
@@ -22,3 +22,8 @@ class NotesDetailView(DetailView):
     model = Notes
     context_object_name = 'note'
 
+class NotesUpdateView(UpdateView):
+    model = Notes
+    # redirect the user to the list of created/existing notes
+    success_url = '/smart/notes'
+    form_class = NotesForm
