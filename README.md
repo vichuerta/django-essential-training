@@ -358,3 +358,29 @@ Okay, so now we have the create end point, it's time to create the view update e
 
 So it's time to think about the last operation from the crude operations, deleting data. Let's start as usual. Let's go back to the views and from here, we're going to add actually from Django views generic edit, let's important delete view. The delete endpoint is even simpler than all the endpoints we created until now. We can add a new class notes delete view that inherits from delete view, and we actually just need the model and a success URL. Once more, the end point URL needs to be added to the URL's file. So let's go back here. Let's copy this and instead of edit, let's call this delete. Let's change the class here and the name. No, we need to create a template to confirm if the user wants to delete a particular note. Let's go here and add a new one called notes underline delete dot HTML. So let's start with the basics. So extends base dot HTML then block. This is also going to be a form. So let's add form and the methods going to be post. Since this is a form we can forget about the CSRF underlying token and then in here, we're going to add a message. Are you sure you want to delete? And then let's add notes dot title, let's add quotes here and then another message saying that this action actually can't be undone. And finally, an input button type is equal submit and the class is going to be BTN BTN danger. So it can be a nice red and value it's going to be confirm. Since we already have our template, we can go back to the details and add yet one more button here called that will lead us to the delete. Let's make it red as well. Okay, it's time to try it out. Let's go back to one particular note. Now we have the delete button and if we click here, oh-oh, okay. We're getting again a template does not exist. We can see here that while it was loading the template, it was looking for a template with the name notes, notes, confirm delete. So we have two alternatives here. One is to change the name of our template to match the template that Django is expecting. I prefer to usually add the template name to avoid having to remember which template is related to which endpoint. So we can come back here to the views and add a template name. This name is also very similar to the other template names that we have. So, in my opinion, this is a little bit better, but you can choose whatever you prefer. Let's try again. Let's delete this. Okay, we have our message, let's confirm and there you go, the note was deleted.
 
+### Chapter 7 Quiz
+
+#### Question 1 of 2
+What must be removed from your template for the form to work successfully?
+
+```html
+<form action="{% url 'notes.new' %}" method='POST'>{% csrf_token %}
+     {{ form.as_p }}
+     <button type="submit" class="btn-primary my-5">Submit</button>
+</form>
+```
+
+- `action="{% url 'notes.new' %}"`
+     Correct ✅
+- `method='POST'>{% csrf_token %}`
+- `{{ form.as_p }}`
+
+#### Question 2 of 2
+When you add the following class to your views page, what else is needed?
+class NotesDeleteView(DeleteView):
+
+- the success url and the form class
+- the model and the form class
+- the model and the success url
+     Correct ✅
+- the model, the success url, and the form class
