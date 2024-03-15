@@ -384,3 +384,52 @@ class NotesDeleteView(DeleteView):
 - the model and the success url
      Correct ✅
 - the model, the success url, and the form class
+
+## 8. Using Django to Store and Display User-Specific Data
+
+### ForeignKey: How models relate to each other
+
+Right now, no matter if a user is logged into an account, they can create notes on the system. However, we want the system to be aware of who's logged in and only display the notes written by their original author. How can we do that? So far, we have two tables in our database, the notes table and the user table. We need to save in the notes which user was the author, and we can do that by creating a link between the user table and the notes table. This is what we called a foreign key. Let's go back to our model and import the user model that comes with Django by default. So from django.contrib.auth.models import User. Now we go to the Notes model and we add a foreign key. Now we go here and we add models.ForeignKey. This here needs a couple of things. The first item is the model we want to create a link with. In this case, this is the User model we just imported. Then, the second item is going to be the on_delete. This means that we are want define what happens to this note if the user associated with it is deleted. In this case, we're going to use models.CASCADE, which means that if a user gets deleted, we also want to delete all the notes associated with them. Finally, we can say how we will identify this relationship on the user side. Related_name is going to be notes. Okay, now that we changed the model, we need to create a migration. Let's go and type `python manage.py makemigrations`, and we're getting an error. 
+
+```bash
+(venv) victorhuerta@Victors-MacBook-Pro django-essential-training % python manage.py makemigrations 
+It is impossible to add a non-nullable field 'user' to notes without specifying a default. This is because the database needs something to populate existing rows.
+Please select a fix:
+ 1) Provide a one-off default now (will be set on all existing rows with a null value for this column)
+ 2) Quit and manually define a default value in models.py.
+Select an option: 1
+Please enter the default value as valid Python.
+The datetime and django.utils.timezone modules are available, so it is possible to provide e.g. timezone.now as a value.
+Type 'exit' to exit this prompt
+>>> 1
+Migrations for 'notes':
+  notes/migrations/0002_notes_user.py
+    - Add field user to notes
+```
+
+The problem here is that we defined that every node needs to be associated with a user, but our database is already fully populated by notes without users, so we need to define what to do now. Since we have a user admin and it's ID is 1 we can pass this as the default user on this migration. If we pass any ID of a user that doesn't exist, this migration will fail, so we should pass an ID of a user that exists. Let's add one. We're going to provide a one-off default, and the ID is going to be 1. Okay, so now we can actually apply the changes to the database with `python manage.py migrate`. 
+
+```bash
+(venv) victorhuerta@Victors-MacBook-Pro django-essential-training % python manage.py migrate       
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, notes, sessions
+Running migrations:
+  Applying notes.0002_notes_user... OK
+```
+
+As I said, this is only working because we do have a user with ID equals 1 in our database, but it would break otherwise. **When creating migrations and adding default values, you should always take care to avoid creating migrations that can break if you start the project again from scratch.** Let's test our implementation and see if it works by opening the shell, so `python manage.py shell`. And let's import the user, from django.contribute.auth.models import User, and let's get the first user. So user is going to be User objects get pk is equal to 1. So this is the admin user that we've been using so far. What we can do now is actually see the notes that this user has, so we can count them. And we can see that all of the five notes that we have in our system is associated to that user. We can even get all the notes from here. So if we say user.notes.all, we're going to have all the object notes being displayed here. That's it. Now we can start making changes to make the system user aware.
+
+```bash
+(venv) victorhuerta@Victors-MacBook-Pro django-essential-training % python manage.py shell
+Python 3.12.2 (main, Feb  6 2024, 20:19:44) [Clang 15.0.0 (clang-1500.1.0.2.5)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from django.contrib.auth.models import User
+>>> user = User.objects.get(pk=1)
+>>> user
+<User: admin>
+>>> user.notes.count()
+2
+>>> user.notes.all()
+<QuerySet [<Notes: Notes object (3)>, <Notes: Notes object (4)>]>
+```
