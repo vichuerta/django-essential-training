@@ -441,3 +441,33 @@ Every note now has the user that created it. But our end point is still displayi
 ### Adding a new note after ForeignKey
 
 We change our notes to have a user, but let's try to add a new one and see what happens. So this is a new note. Does it work? Let's submit.. Uh oh, okay, we have an error. You can see here that there is a constraint that a note can't have a null user. The problem is that we don't say in the form to consider the logged in user as the author of that note. So we need to change this. And this is a bit tricky, So bear with me for a second. So in here on the creative view, we're going to override the method--Def form valid-- that receives a self and form. The first thing it is that we need to get the object, which is going to be formed at safe, and then commit is equal to false. Now we're going to fill the object. So self.object.user is going to receive the request user. And then we're going to self.object.save. And finally, we need to return an HTTP response, redirect. And then this is going to get, self.get success URL. Let's see, the HTP response redirect is already being imported from Django HTTP response. And that's it. That's why we need to get our form validated Okay. So that was a little bit tricky. Let's understand what's going on here. So the data is sent by the user, passed inside the form, which asks a simple question: is this data valid. To see if the data is valid, the form would call a couple of methods that have the title started with clean. So clean title, clean text, like the one we changed before. If something is wrong, the method is valid returns false, and the class-based view will raise an exception. On the other hand, if all checks clear, the data is stored in a variable called clean data. And when you call form.save, that will save the object directly in the database. And that's it. It all's happened very smoothly. So what happens here is that when we pass title and text to the form, the method is valid returns through. Then the form valid method will call the save and we will try to save to the database, but although the form is returning is valid, is equal through the database is forbidding us to try to save a note without a user. That's where we get our error. What we did here was to get in the middle of it so we can inject the logged user as part of the object. We do this by passing the attribute commit equals false, that creates the object, but doesn't save it to the database. Then we have the object when we insert the user, and then we call save, successfully saving the note with that user to the database. As you can see, classmate's views can be changed as you please. Now the end point is working in life is good again. So we refresh here and add a new note. Yeah. As you can see, classmate's views can be changed as you please. Now the end point is working and life is good again.
+
+### Chapter 8 Quiz
+
+#### Question 1 of 3
+Which attribute of `.save()` is passed to inject the locked user as part of the object, but does not save it to the database?
+
+- the `(commit=True)` attribute
+- the `(commit=False)` attribute
+    Correct ✅
+- the `(commit=No)` attribute
+- the `(commit=Yes)` attribute
+
+#### Question 2 of 3
+Which method needs to be altered in order to list only the user notes?
+
+- the def `get_queryset(self):` method
+    Correct ✅
+- the def `get_template_names(self):` method
+- the def `get_allow_empty(self):` method
+- the def `get_ordering(self):` method
+
+#### Question 3 of 3
+What is the purpose of a foreign key, as used in this course?
+
+- to create a link between the title notes and the text notes
+- to create a link between the user table and the text notes
+- to create a link between the title notes and the notes table
+- to create a link between the user table and the notes table
+    Correct ✅
+
