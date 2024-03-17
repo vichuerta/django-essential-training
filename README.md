@@ -482,3 +482,22 @@ Now that we have login and logout endpoints, it is time to create a signup page.
 
 ### Finishing touches
 Okay, we are so close. It is time to add it all together. So let's go to static, templates, Base_html and then, in here, what we're we going to do is add a nav, so a navigation bar. We need a couple of classes, here, so let's add navbar, navbar-dark and a dark background. Okay, inside of it, we're going to need a div, and this div must have a class ms-auto. And then, in here, we can add a link. Okay, so let's add a link to the login page. So, in here, let's add href that has the command URL login and then some classes here. Let's make this a button, so btn btn-outline-light. And let's add some spacing here. Okay, let's try this out. Amazing, so you can see, here, that now we have a Login button, but it doesn't really make sense to have a Login button for a logged in user. So you can see, here, that we have a logged in user, so let's add some logic to change this. So if it's an authenticated user, we want to display the logout URL, not the login. So, in here, what we can do is use and if statement, so if user.is_authenticated, yes this is the same method as we used before. We're going to display something, and then, if else, we're going to display something else and then we need to end the if. Okay, so now if the user is authenticated we don't want to show the login, we want to show the logout. Same thing here, logout. Okay, let's see how that goes. I'm going to refresh. Okay, now I have a logout. If I try this I'm going to get my end message, and now I'm going to see the login because I'm not authenticated, so let's try that. Let's authenticate, here, and there you go. So we have our login, logout. We can use the same logic to add other things. So, for instance, if a user is authenticated we also want to have a Home button so they can go to notes.list, and a Create button so they can go and create a new note. But if they are not authenticated, we also want to display the signup option, Signup, and then signup. Okay, so let's try this out. I'm authenticated, if I click Home I'll see the notes that I have. If I go to Create, I'll go to the create page, and if I Logout, I can see the message saying that I'm logged out. What I can do, now, as a logged out user, is actually signing up. So let's try something different. I'm going to add a user name, django, let's add some passwords, here, let's Submit. Okay, so it redirects me to the login page so I can try my new user, and there you go. Now if you create a new note, here, we have our first project up and running with a full authentication cycle.
+
+### Chapter 9 Quiz
+
+#### Question 1 of 2
+How can you ensure that only people who are not logged in can access the signup page?
+
+- by overriding the `DELETE` method and redirecting the user if they are already logged in
+- by overriding the `GET` method and redirecting the user if they are already logged in
+    Correct ✅
+- by overriding the `PUT` method and redirecting the user if they are already logged in
+- by overriding the `POST` method and redirecting the user if they are already logged in
+
+#### Question 2 of 2
+To redirect users to the smartnotes page when logging in, what should be listed in the settings?
+
+- `LOGIN_REDIRECT= '/smartnotes'`
+- `LOGIN_REDIRECT_URL = 'smartnotes'`
+- `LOGIN_REDIRECT_URL = '/smart/notes'`
+    Correct ✅
